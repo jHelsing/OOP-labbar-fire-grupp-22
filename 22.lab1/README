@@ -1,3 +1,6 @@
 Uppgifter Del A:
 1. cd är kommandot som tar dig till din hemmapp.
-2. Kommandot som används är ls -l. På datorn vi använder (OS X 10.9.4) får vi upp 9 kolumner. 
+3. Kommandot som används är ls -l. På datorn vi använder (OS X 10.9.4) får vi upp 9 kolumner. den första är rättigheterna till filen, läs skriv eller båda. Den andra är antalet länkar. Den tredje är namnet på filens/mappens ägare. Den fjärde är namnet på gruppen han tillhör. Den femte kolumnen är antalet bytes som finns i filen (så som det benämns i man ls). Den sjätte kolumen är datumet då filen senast modifierades. Den sjunde kolumnen är förkortningen på månaden då filen senast modifierades. Den åttonden kolumnen är tidpunkten då filen modifierades senast. Ibland står det ett årtal istället för klockslaget (misstänker att det är när det var minst 1 år sedan filen modifierades). Den sista kolumen, den nionde, är vad filen heter (path-name).
+Alla har läs och skrivrättigheter. (Privat dator).
+4. Bara ägaren har skriv-, läs- och exekveringsrättigheter. Kommandot chmod go-rwx fil/mappnamn ändra rättigheterna för mappen/filen till rwx, alltså bara ägaren har rätt att läsa, skriva och exekvera filen/mappen. Övriga användare har inte rättigheter att göra något med filen/mappen.
+5. Filen inne i “f1pt” som precis skapades har ägaren läs-och skrivrättigheter. Övriga användare har rätt att läsa filen. 
