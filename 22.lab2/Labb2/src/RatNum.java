@@ -24,6 +24,10 @@ public class RatNum {
 			throw new NumberFormatException("Denominator = 0");			
 		}
 		else {
+			if (b<0) {
+				b = -b;
+				a = -a;
+			}
 		int devideBy = gcd(a, b);
 		this.m = a/devideBy;
 		this.n = b/devideBy;
@@ -53,8 +57,9 @@ public class RatNum {
 				m = m/-1;
 				n = n/-1;
 			} else if(n<0) {
-				m = m*-1;
 				n = -n;
+			} else if(m < 0) {
+				m = -m;
 			}
 			
 		}
@@ -62,7 +67,7 @@ public class RatNum {
 			throw new IllegalArgumentException();			
 		} else if (n == 0) {
 			return m;			
-		} else {}
+		} 
 			int r;
 			while (true) {
 				r = m%n;
