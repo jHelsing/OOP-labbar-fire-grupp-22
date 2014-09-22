@@ -31,6 +31,11 @@ public class RatNum {
 		
 	}
 	
+	public RatNum(RatNum r) {
+		m = r.getNumerator();
+		n = r.getDenominator();
+	}
+	
 	public int getNumerator() {
 		return m;
 	}
@@ -45,12 +50,11 @@ public class RatNum {
 			
 		if ( m<0 || n<0 ) {
 			if (m < 0 && n < 0) {
-				m = (m/-1);
-				n = n/-1;
-			} else if( m < 0 ) {
 				m = m/-1;
-			} else if(n<0) {
 				n = n/-1;
+			} else if(n<0) {
+				m = m*-1;
+				n = -n;
 			}
 			
 		}
