@@ -11,7 +11,7 @@ public class Rse {
 	public static boolean allRowSumsEqual(int[][] m) {
 		/*Kolla så att inte matrisen är tom, är null, endast innehåller en array
 		* eller inte innehåller några arrays alls.
-		* */
+		s*/
 		if (m == null) {
 			errorMsg = ("Matrisen var null");
 			return false;
