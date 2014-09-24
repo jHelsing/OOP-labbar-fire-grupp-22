@@ -1,5 +1,3 @@
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 	/* Calculate rational numbers.
 	 * @author Tobias Alldén
 	 * @author Jonathan Helsing
