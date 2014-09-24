@@ -5,6 +5,7 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 	 * @author Jonathan Helsing
 	 * Labbgrupp 22
 	*/
+
 public class RatNum {	
 	
 	private int m;
