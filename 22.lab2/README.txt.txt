@@ -1,11 +1,27 @@
-Att gora: 
-Lasa igenom del2
-Skriva kallkod del2
-----------------------
+Del 1:
+-------------------------------
+TestRseEH utkod:
+1)  a=  correct (T) [ { 1 2 1 2 1 2 } { 4 0 0 2 2 1 } { 1 1 1 1 1 4 } ]
+2)  b=  correct (F) [ { 1 2 3 4 } { 5 6 7 8 } { 1 1 1 1 } ]
+3)  c=  correct (T) [ { 1 } { 2 -1 } { 3 -1 -1 } ]
+4)  d=  correct (T) [ null ]
+5)  e=  correct (T) [ null null null ]
+6)  f=  correct (T) [ - ]
+7)  g=  correct (T) [ { - } ]
+8)  h=  correct (T) [ { 1 2 3 } ]
+9)  i=  correct (F) [ { 1 } { 2 } { 3 } ]
+10) j=  correct (T) [ { 0 } ]
+11) k=  correct (F) [ { 1 2 3 } { 3 2 1 } { 4 4 4 } ]
+12) l=  correct (F) [ { 1 2 3 } { 3 -2 -1 } { 4 4 4 } ]
+13) m=  correct (T) [ { 0 0 0 0 } null { 5 5 -5 -5 } ]
+14) n=  correct (T) [ { 0 0 0 0 } null { - } ]
+15) o=  correct (F) [ { 0 0 3 0 } null { - } ]
+16) p=  correct (F) [ { 1 2 3 } { 4 5 6 } { 7 8 9 } { 1 2 3 } ]
+17) q=  correct (F) [ { 1 2 3 } { 4 5 6 } { 7 8 9 } { 7 8 9 } ]
+Rse: All tests passed
 
-Changelog
----------------------------------
-2014-09-15: Skrev om Rse. - Allden
-2014-09-17: Skrev om TestRse -Allden
-Del 1 av Labben Klar.
-2014-09-21: Skrev till lite i RatNum, fattas nu bara kopieringskonstruktorn, samt steg 3
+Del 2:
+----------------------------------
+Testprogrammet RatNumTest3 är utformat för att använda de olika metoderna och konstruktörerna i RatNum klassen som vi har skrivit.
+Detta gör programmet genom följande:
+
