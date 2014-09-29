@@ -7,6 +7,12 @@
 public class CounterModel implements CounterInterface {
 	
 	private int count;
+	private static int nbrOfCounters;
+	
+	public CounterModel() {
+		this.count = 0;
+		nbrOfCounters++;
+	}
 	
 	public void increment() {
 		this.count++;
@@ -19,6 +25,10 @@ public class CounterModel implements CounterInterface {
 	}
 	public int getValue() {
 		return this.count;
+	}
+	
+	public static int getNbrOfCounters() {
+		return nbrOfCounters;
 	}
 	
 }
