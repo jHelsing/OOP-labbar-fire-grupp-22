@@ -55,8 +55,13 @@ public class RatNum {
 	public String toString() {
 		int modulo = m%n;
 		int d = m/n;
-		String s = d + " " + modulo + "/" + this.n;
-		return s; 
+		String s = "";
+		if (d >= 1) {
+			s = d + " " + modulo + "/" + this.n;
+		} else {
+			s = this.m + "/" + this.n;
+		}
+		 return s;
 	} // end toString()
 	
 	public double toDouble() {
