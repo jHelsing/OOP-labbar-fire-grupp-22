@@ -4,23 +4,21 @@
 	 * Labbgrupp 22
 	 */
 
-public class CounterModel {
+public class CounterModel implements CounterInterface {
 	
 	private int count;
 	
-	public interface CounterInterface() {
-		public void increment() {
-			this.count++;
-		}
-		public void decrement() {
-			this.count--;
-		}
-		public void reset() {
-			this.count = 0;
-		}
-		public int getValue() {
-			return this.count;
-		}
+	public void increment() {
+		this.count++;
+	}
+	public void decrement() {
+		this.count--;
+	}
+	public void reset() {
+		this.count = 0;
+	}
+	public int getValue() {
+		return this.count;
 	}
 	
 }
