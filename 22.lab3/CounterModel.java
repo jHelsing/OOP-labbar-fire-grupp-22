@@ -12,23 +12,26 @@ public class CounterModel implements CounterInterface {
 	public CounterModel() {
 		this.count = 0;
 		nbrOfCounters++;
-	}
+	} // end CounterModel
 	
 	public void increment() {
 		this.count++;
-	}
+	} // end increment
+	
 	public void decrement() {
 		this.count--;
-	}
+	} // end decrement
+	
 	public void reset() {
 		this.count = 0;
-	}
+	} // end reset
+	
 	public int getValue() {
 		return this.count;
-	}
+	} // end getValue
 	
 	public static int getNbrOfCounters() {
 		return nbrOfCounters;
-	}
+	} // getNbrOfCounters
 	
 }
