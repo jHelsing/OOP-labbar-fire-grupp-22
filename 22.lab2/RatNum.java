@@ -1,5 +1,5 @@
 	/* Calculate rational numbers.
-	 * @author Tobias Alldén
+	 * @author Tobias Allden
 	 * @author Jonathan Helsing
 	 * Labbgrupp 22
 	*/
@@ -27,7 +27,7 @@ public class RatNum {
 	
 	public RatNum(int a, int b) {
 		if (b == 0) {
-			throw new NumberFormatException("Denominator = 0");			
+			throw new NumberFormatException("Denominator = 0");
 		} else {
 			if (b<0) {
 				b = -b;
@@ -58,6 +58,8 @@ public class RatNum {
 		String s = "";
 		if (d >= 1) {
 			s = d + " " + modulo + "/" + this.n;
+		} else if (d <= -1) {
+			s = d + " " + -modulo + "/" + this.n;
 		} else {
 			s = this.m + "/" + this.n;
 		}
@@ -71,7 +73,6 @@ public class RatNum {
 	} // end toDouble()
 
 	public static RatNum parse(String s) {
-		System.out.println("String : " + s);
 		int m = 0;
 		int n = 0;
 		boolean tryParse;
@@ -97,14 +98,9 @@ public class RatNum {
 			int slash = s.indexOf("/");
 			numberOne = s.substring(0,slash);
 			numberTwo = s.substring(slash+1,s.length());
-			try {
-				m = Integer.parseInt(numberOne);
-				n = Integer.parseInt(numberTwo);
-				tryParse = true;
-			}
-			catch(NumberFormatException e) {
-				tryParse = false;
-			}
+			m = Integer.parseInt(numberOne);
+			n = Integer.parseInt(numberTwo);
+			tryParse = true;
 			if(tryParse) {
 				return new RatNum(m,n);
 			} else {
