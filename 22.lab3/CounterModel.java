@@ -24,10 +24,15 @@ public class CounterModel implements CounterInterface {
 	
 	public void increment() {
 		this.count = count + this.modulus;
+		
 	} // end increment
 	
 	public void decrement() {
-		this.count = count - this.modulus;
+		int temp = count - 1;
+		if(temp < 0) {
+			this.count = modulus;
+		}
+		this.count = temp;
 	} // end decrement
 	
 	public void reset() {
