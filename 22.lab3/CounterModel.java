@@ -12,7 +12,7 @@ public class CounterModel implements CounterInterface {
 	
 	public CounterModel() {
 		this.count = 0;
-		this.modulus = 1;
+		this.modulus = 100;
 		nbrOfCounters++;
 	} // end CounterModel
 	
@@ -23,16 +23,17 @@ public class CounterModel implements CounterInterface {
 	} // end CounterModel
 	
 	public void increment() {
-		this.count = count + this.modulus;
+		this.count = (count+1)%this.modulus;
 		
 	} // end increment
 	
 	public void decrement() {
-		int temp = count - 1;
+		int temp = this.count - 1;
 		if(temp < 0) {
-			this.count = modulus;
+			this.count = this.modulus - 1;
+		} else {
+			this.count = temp;
 		}
-		this.count = temp;
 	} // end decrement
 	
 	public void reset() {
