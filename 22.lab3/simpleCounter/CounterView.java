@@ -1,9 +1,11 @@
+package simpleCounter;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class CounterView extends JPanel {
 
-	private CounterInterface cm; // en räknare
+	private CounterInterface cm; // en r��knare
 	// eller private CounterModel cm;
 	private Font font;
 

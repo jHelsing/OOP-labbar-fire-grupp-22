@@ -1,3 +1,4 @@
+package simpleCounter;
 
 public interface CounterInterface {	
 
