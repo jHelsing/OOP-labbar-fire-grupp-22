@@ -1,4 +1,4 @@
-	/*
+	/**
 	 * @author Tobias Allden
 	 * @author Jonathan Helsing
 	 * Labbgrupp 22
@@ -6,6 +6,11 @@
 package simpleCounter;
 
 public class TestCounter {
+	
+	/**
+	 * Main class method for the testing of CounterModel.
+	 * @param args - unused.
+	 */
 	
 	public static void main(String[] args) {
 		
@@ -17,9 +22,8 @@ public class TestCounter {
 		if(cmDefaultModulus.getModulus() != 10) {
 			error(1);
 		} else {
-			System.out.println("Default contstructor gives the right modulus");
+			System.out.println("Passed test: Default contstructor");
 		}
-		System.out.println("");
 		
 		//Testing so that getting a higher count than modulus doesn't work
 		for(int i = 1; i <= 90; i++) {
@@ -31,9 +35,8 @@ public class TestCounter {
 		if(cm80Modulus.getValue() != 10) {
 			error(3);
 		} else {
-			System.out.println("Passed test with trying to increase beyond modulus");
+			System.out.println("Passed test: increase value beyond modulus");
 		}
-		System.out.println("");
 		
 		//Testing s that getting a count below 0 is not possible and
 		//that the modulus sets the value as it should
@@ -46,16 +49,13 @@ public class TestCounter {
 		if(cm90Modulus.getValue() != 86 ) {
 			error(4);
 		} else {
-			System.out.println("Passed test with trying to decrease beyond 0");
+			System.out.println("Passed test: decrease value below 0");
 		}
-		System.out.println("");
 		
 		//Testing the Equals method
 		cm80Modulus.reset();
 		cm90Modulus.reset();
 		CounterModel cm80Modulus2 = new CounterModel(80);
-		CounterModel cm90Modulus2 = new CounterModel(90);
-		
 		cm80Modulus2.increment();
 		if(cm80Modulus.equals(cm80Modulus2)) {
 			error(6);
@@ -68,7 +68,7 @@ public class TestCounter {
 				if(cm90Modulus.equals(cm80Modulus)) {
 					error(7);
 				} else {
-					System.out.println("Equals working as it is supposed to");
+					System.out.println("Passed Test: Equals");
 				}
 			}
 		}
@@ -79,7 +79,7 @@ public class TestCounter {
 		if(toString == cm90Modulus.toString()) {
 			error(9);
 		} else {
-			System.out.println("Passed toString test");
+			System.out.println("Passed test: toString");
 		}
 		
 		//Generating an array with CounterModels
@@ -95,35 +95,45 @@ public class TestCounter {
 			cmArray[3].decrement();
 			cmArray[4].decrement();
 		}
-		System.out.println("cmArray[0]: " + cmArray[0].toString());
+		
+		//Testing toString with array
+		System.out.println("Testing toString with cmArray[0]: " + cmArray[0].toString());
+		
+		//Testing equals with an array containing CounterModel objects
 		if(cmArray[3].equals(cmArray[4])) {
-			System.out.println("Passed test: comparing different CM objects in an array works");
+			System.out.println("Passed test: equal with arrays");
 		} else {
-			System.out.println("Comparing 2 CM objects in an array does not work");
+			error(11);
 		}
 		
 		//Testing countTheCounter
-		System.out.println("");
 		CounterModel countCounter = new CounterModel(20);
 		System.out.print("Initial Value: " + countCounter.getValue());
 		countTheCounter(countCounter);
 		System.out.print(" New Value: " + countCounter.getValue());
 		System.out.println("");
 		
+		//Testing FastCounter
 		FastCounter x = new FastCounter(4,2);
 		FastCounter x2 = new FastCounter(4,2);
 		if(x.equals(x2)) {
-			System.out.println("x = x2: Equals working for FastCounter");
+			System.out.println("Passed test: Equals with FastCounter");
 		} else {
 			error(10);
 		}
 		System.out.println(x.toString());
 		
+		//Testing default constructor for FastCounter
 		System.out.print("Default FastCounter: ");
 		FastCounter x3 = new FastCounter();
 		System.out.print(x3.toString());
 		
 	}
+	
+	/**
+	 * All the error codes in this test-program goes here. 
+	 * @param code - The specified error code.
+	 */
 	
 	public static void error(int code) {
 		switch(code) {
@@ -157,13 +167,22 @@ public class TestCounter {
 			break;
 		case 10:
 			System.out.println("Error Code 10: FastCounter equals not working");
+			break;
+		case 11:
+			System.out.println("Error Code 11: Equals with array does not work.");
+			break;
 		}
 	}
+	
+	/**
+	 * Increases the count of a CounterModel by 10.
+	 * @param cm - An instance of CounterModel.
+	 */
 	
 	public static void countTheCounter(CounterModel cm) {
 		for(int i=1; i<=10; i++) {
 			cm.increment();
-		};
+		}
 	}
 	
 }

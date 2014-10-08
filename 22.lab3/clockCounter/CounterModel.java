@@ -3,7 +3,6 @@
 	 * @author Jonathan Helsing
 	 * Labbgrupp 22
 	 */
-package simpleCounter;
 
 public class CounterModel implements CounterInterface {
 	
@@ -24,7 +23,9 @@ public class CounterModel implements CounterInterface {
 	
 	/**
 	 * The 2nd constructor with a parameter for a value for modulus.
-	 * @param modulus
+	 * @param Modulus - The max value for the counter. If the counter
+	 * value reaches modulus it will reset to 0. If the counter reaches
+	 * below 0 it will reset to modulus.
 	 */
 	
 	public CounterModel(Integer modulus) {
@@ -40,12 +41,23 @@ public class CounterModel implements CounterInterface {
 		}
 	} // end CounterModel
 	
+	/**
+	 * Increases the value of the counter by one.
+	 * If count reaches modulus it will reset the count to 0.
+	 */
+	
 	public void increment() {
 		this.count++;
 		if((this.count % this.modulus) == 0) {
 			this.count = 0;
 		}
 	} // end increment
+	
+	/**
+	 * Decreases the value of the counter by one.
+	 * if count get's below or equals 0 after decrementing
+	 * it will set the count ot modulus instead.
+	 */
 	
 	public void decrement() {
 		int temp = this.count - 1;
@@ -56,9 +68,19 @@ public class CounterModel implements CounterInterface {
 		}
 	} // end decrement
 	
+	/**
+	 * Resets the value of the counter.
+	 */
+	
 	public void reset() {
 		this.count = 0;
 	} // end reset
+	
+	/**
+	 * Comparing two CounterModel objects by checking if their modulus
+	 * and their value is the same. If they are the method will return true.
+	 * If not, it will return false.
+	 */
 	
 	public boolean equals(Object o) {
 		if(o instanceof CounterModel) {
@@ -82,17 +104,37 @@ public class CounterModel implements CounterInterface {
 		}
 	}
 	
+	/**
+	 * Generates a string containing the value and modulus for the
+	 * specified CounterModel.
+	 */
+	
 	public String toString() {
 		return "Value: " + this.count + " Modulus: " + this.modulus;
 	}
+	
+	/**
+	 * A getter for the value of the specified CounterModel.
+	 * @return The value of the instance.
+	 */
 	
 	public int getValue() {
 		return this.count;
 	} // end getValue
 	
+	/**
+	 * A getter for the amount of counters that has been generated.
+	 * @return The number of instances of CounterModel that has been created.
+	 */
+	
 	public static int getNbrOfCounters() {
 		return nbrOfCounters;
 	} // end getNbrOfCounters
+	
+	/**
+	 * A getter for the modulus of the specified CounterModel
+	 * @return The modulus of the instance.
+	 */
 	
 	public int getModulus() {
 		return this.modulus;
