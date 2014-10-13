@@ -4,6 +4,7 @@
 	<classpathentry kind="src" path="22.lab2"/>
 	<classpathentry excluding="clockCounter/" kind="src" path="22.lab3"/>
 	<classpathentry kind="src" path="22.lab3/clockCounter"/>
+	<classpathentry kind="src" path="22.lab4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

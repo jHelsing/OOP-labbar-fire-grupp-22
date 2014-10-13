@@ -2,10 +2,11 @@ import java.awt.Color;
 
 import javax.swing.Icon;
 
-/* A class for cards to  be used in Memory.
+/**
+ *  A class for cards to  be used in Memory.
  * @author Tobias Allden and Jonathan Helsing 
- * 
  */
+
 public class Kort extends JColorfulButton{
 	
 	public enum Status {
@@ -13,20 +14,20 @@ public class Kort extends JColorfulButton{
 	}
 
 
-	private Icon icon;//ikonen
+	private Icon icon; //ikonen
 	private Status status;
 	
 	public Kort(Icon i) {
 		super(i);
 		this.icon = i;
 		this.setStatus(Status.SAKNAS);
-	}//Konstruktor för icon
+	}//Konstruktor fï¿½r icon
 	
 	public Kort(Icon i, Status status){
 		super(i);
 		this.icon = i;
 		this.setStatus(status);
-	}//Konstruktor för status och icon
+	}//Konstruktor fï¿½r status och icon
 
 	public void setStatus(Status status) {
 		switch (status) {
@@ -53,7 +54,7 @@ public class Kort extends JColorfulButton{
 			break;
 		}
 
-	} //För att setta statusen
+	} //Fï¿½r att setta statusen
 	
 	public Status getStatus(){
 		return this.status;
