@@ -35,14 +35,14 @@ public class Kort extends JColorfulButton{
 			this.setBackground(Color.blue);
 			this.status = Status.DOLT;
 			setIcon(null);
-			
 			break;
+			
 		case SAKNAS:
 			this.setBackground(Color.white);
 			this.status = Status.SAKNAS;
 			setIcon(null);
-			
 			break;
+			
 		case SYNLIGT:
 			this.setBackground(Color.blue);
 			this.status=Status.SYNLIGT;

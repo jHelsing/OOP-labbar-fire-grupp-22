@@ -75,6 +75,7 @@ public class Memory extends JFrame {
 		public GamePanel() {
 			setLayout(new GridLayout(cols,rows));
 			setBackground(Color.blue);
+			nyttSpel();
 		}
 
 		@Override
@@ -92,21 +93,20 @@ public class Memory extends JFrame {
 	for(int i = 0;i<bilder.length;i++) {
 			String path = bilder[i].getPath();
 			cards.add(new Kort(new ImageIcon(path)));
-			cards..setIcon(new ImageIcon(path));
+			cards.setIcon(new ImageIcon(path));
 		}
 		this.gamePanel.add(cards);
 	}
 	
-	private void startValues() { // Kolla input om korrekt, samt sätt startvärden
+	private void startValues() { // Kolla input om korrekt, samt sï¿½tt startvï¿½rden
 		boolean valuesSet = false;
 		while (valuesSet == false) {
 			try {
 				this.cols = Integer.parseInt(JOptionPane.showInputDialog("How many columns?"));				 
 				this.rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));
 				valuesSet = true;				
-				int nbrOfImg = bildmapp.listFiles().length;
-				if((this.cols*this.rows)> nbrOfImg) {
-					throw new FilerException("För stor spelplan för antalet kort");
+				if((this.cols*this.rows)/2> bilder.length) {
+					throw new FilerException("Fï¿½r stor spelplan fï¿½r antalet kort");
 				}
 				valuesSet = true;
 				}
