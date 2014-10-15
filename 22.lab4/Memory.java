@@ -2,8 +2,10 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.annotation.processing.FilerException;
 import javax.swing.*;
 
 /**
@@ -13,42 +15,45 @@ import javax.swing.*;
 
 public class Memory extends JFrame {
 	private ArrayList<Player> players = new ArrayList<Player>();
-	
-	public Memory(int nbrOfCols,int nbrOfRows) {
-		setSize(new Dimension(300,400));
-		buttonPanel btnPanel = new buttonPanel();
+	private int rows = 0;
+	private int cols = 0;
+	private GamePanel gamePanel;
+	File bildmapp = new File("bildmapp");
+	File[] bilder = this.bildmapp.listFiles();
+
+	public Memory() {
+		startValues();
+		ButtonPanel btnPanel = new ButtonPanel();
 		PlayersPanel playersPanel = new PlayersPanel(players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Memory");
-		JMenu menu = new JMenu();
-		JMenuItem newGame = new JMenuItem("Nytt spel");
-		menu.add(newGame);
-		add(btnPanel,BorderLayout.SOUTH);
-		//Add newGame
+		add(btnPanel,BorderLayout.SOUTH);;
 		add(playersPanel,BorderLayout.WEST);
-		add(menu);
+		nyttSpel();
+		add(gamePanel,BorderLayout.CENTER);
+		
 		pack();
 		setVisible(true);
-		
+
 	}
-	
-	
-	private class buttonPanel extends JPanel implements ActionListener {
+
+
+	private class ButtonPanel extends JPanel implements ActionListener {
 		private JButton newButton = new JButton("New Game");
 		private JButton exitButton = new JButton("Exit");
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().getClass().getName() == "New Game") {
-				
+
 			}
 			else {
-				
+
 				System.exit(0);
 			}
-			
+
 		}
-		
-		public buttonPanel() {
+
+		public ButtonPanel() {
 			setBackground(Color.yellow);
 			setLayout(new FlowLayout());
 			newButton.addActionListener(this);
@@ -58,57 +63,75 @@ public class Memory extends JFrame {
 		}
 	}
 	private class PlayersPanel extends JPanel{
-		
-		
 		public	PlayersPanel(ArrayList<Player> players) {
-			
+
 			setBackground(Color.RED);
-			setLayout(new BoxLayout(this,));
+			//setLayout(new BoxLayout(this,));
 		}
 	}
-	
-	
 
-	
-	
-	
-	public static void main(String[] args) {		
-		//String nbrOfCol = JOptionPane.showInputDialog("Ange antelet kolumner.");
-		//String nbrOfRow = JOptionPane.showInputDialog("Ange antalet rader.");
-		//int row = Integer.parseInt(nbrOfRow);
-		//int col = Integer.parseInt(nbrOfCol);
-		int nbrOfCols = 0;
-		int nbrOfPlayers = 0;
-		int nbrOfRows = 0;
-		startValues(nbrOfCols,nbrOfRows);
-		Memory game = new Memory(nbrOfCols,nbrOfRows );
+	private class GamePanel extends JPanel implements ActionListener {
 		
+		public GamePanel() {
+			setLayout(new GridLayout(cols,rows));
+			setBackground(Color.blue);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("hi!");
+			
+		}
 	}
 	
-	
-	private static void startValues(int Cols, int Rows) { // Kolla input om korrekt, samt sÃ¤tt startvÃ¤rden
-		 boolean valuesSet = false;
-		 while (valuesSet == false) {
-			 try {
-				 Cols = Integer.parseInt(JOptionPane.showInputDialog("How many columns?"));				 
-				 Rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));
-				 File Img = new File("/img");
-				 int nbrOfImg = Img.listFiles().length;
-				 if((Cols*Rows)> nbrOfImg) {
-				 	throw new FileException("FÃ¶r stor spelplan fÃ¶r antalet kort");
-				 }
-				 valuesSet = true;
-			 }
-			 catch(NumberFormatException e) {
-				 JOptionPane.showMessageDialog(null, "Skriv ett riktigt nummer", "fel", JOptionPane.ERROR_MESSAGE);
-			 }
-			 catch(FileException e) {
-			 	JOPtionPane.showMEssageDialog(null, "DAnge fÃ¤rre antal kolumner/rader "fel", JOptionPane.ERROR_Message);
-			 }
-			 
-		 }
+	private void nyttSpel() { // initierar spel med kort.
+		this.gamePanel = new GamePanel();
+		//Kort[] cards = new Kort[rows*cols];
+		ArrayList<Kort> cards = new ArrayList<Kort>();
+		System.out.println(bilder[0].getPath());
+	for(int i = 0;i<bilder.length;i++) {
+			String path = bilder[i].getPath();
+			cards.add(new Kort(new ImageIcon(path)));
+			cards..setIcon(new ImageIcon(path));
 		}
+		this.gamePanel.add(cards);
+	}
 	
-	
+	private void startValues() { // Kolla input om korrekt, samt sätt startvärden
+		boolean valuesSet = false;
+		while (valuesSet == false) {
+			try {
+				this.cols = Integer.parseInt(JOptionPane.showInputDialog("How many columns?"));				 
+				this.rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));
+				valuesSet = true;				
+				int nbrOfImg = bildmapp.listFiles().length;
+				if((this.cols*this.rows)> nbrOfImg) {
+					throw new FilerException("För stor spelplan för antalet kort");
+				}
+				valuesSet = true;
+				}
+				catch(NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Skriv ett riktigt nummer", "fel", JOptionPane.ERROR_MESSAGE);
+				}
+				catch(FilerException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(),"Fel", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 
+			}
+
+
+
+
+
+
+
+
+
+
+	public static void main(String[] args) {
+		Memory game = new Memory();
+
+	}
 }
+
