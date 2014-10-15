@@ -2,6 +2,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -11,16 +12,19 @@ import javax.swing.*;
  */
 
 public class Memory extends JFrame {
+	private ArrayList<Player> players = new ArrayList<Player>();
 	
-	public Memory() {
+	public Memory(int nbrOfCols,int nbrOfRows) {
 		setSize(new Dimension(300,400));
 		buttonPanel btnPanel = new buttonPanel();
+		PlayersPanel playersPanel = new PlayersPanel(players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Memory");
 		JMenu menu = new JMenu();
 		JMenuItem newGame = new JMenuItem("Nytt spel");
 		menu.add(newGame);
 		add(btnPanel,BorderLayout.SOUTH);
+		add(playersPanel,BorderLayout.WEST);
 		add(menu);
 		pack();
 		setVisible(true);
@@ -45,13 +49,23 @@ public class Memory extends JFrame {
 		
 		public buttonPanel() {
 			setBackground(Color.yellow);
-			setLayout(new BorderLayout(2,2));
+			setLayout(new FlowLayout());
 			newButton.addActionListener(this);
 			exitButton.addActionListener(this);
-			add(newButton,BorderLayout.WEST);
-			add(exitButton,BorderLayout.EAST);
+			add(newButton);
+			add(exitButton);
 		}
 	}
+	private class PlayersPanel extends JPanel{
+		
+		
+		public	PlayersPanel(ArrayList<Player> players) {
+			
+			setBackground(Color.RED);
+			setLayout(new BorderLayout(2,2));
+		}
+	}
+	
 	
 
 	
@@ -62,26 +76,22 @@ public class Memory extends JFrame {
 		//String nbrOfRow = JOptionPane.showInputDialog("Ange antalet rader.");
 		//int row = Integer.parseInt(nbrOfRow);
 		//int col = Integer.parseInt(nbrOfCol);
-		int nbrOfCards = 0;
+		int nbrOfCols = 0;
 		int nbrOfPlayers = 0;
 		int nbrOfRows = 0;
-		startValues(nbrOfCards,nbrOfPlayers, nbrOfRows);
-		Memory game = new Memory();
+		startValues(nbrOfCols,nbrOfRows);
+		Memory game = new Memory(nbrOfCols,nbrOfRows );
 		
 	}
 	
 	
-	 static void startValues(int Cards, int Players, int rows) {
+	 static void startValues(int Cols, int Rows) { // Kolla input om korrekt, samt sätt startvärden
 		 boolean valuesSet = false;
 		 while (valuesSet == false) {
-			 try{
-				Cards =  Integer.parseInt(JOptionPane.showInputDialog("How many players?"));
-				Players =  Integer.parseInt(JOptionPane.showInputDialog("How many columns?"));
-				rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));
-				
-				
-				
-				valuesSet = true;
+			 try {
+				 Cols = Integer.parseInt(JOptionPane.showInputDialog("How many columns?"));				 
+				 Rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));
+				 valuesSet = true;		 
 				 
 			 }
 			 catch(NumberFormatException e) {
