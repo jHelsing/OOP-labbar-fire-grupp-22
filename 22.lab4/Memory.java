@@ -86,17 +86,24 @@ public class Memory extends JFrame {
 	}
 	
 	
-	 static void startValues(int Cols, int Rows) { // Kolla input om korrekt, samt s�tt startv�rden
+	private static void startValues(int Cols, int Rows) { // Kolla input om korrekt, samt sätt startvärden
 		 boolean valuesSet = false;
 		 while (valuesSet == false) {
 			 try {
 				 Cols = Integer.parseInt(JOptionPane.showInputDialog("How many columns?"));				 
 				 Rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));
-				 valuesSet = true;		 
-				 
+				 File Img = new File("/img");
+				 int nbrOfImg = Img.listFiles().length;
+				 if((Cols*Rows)> nbrOfImg) {
+				 	throw new FileException("För stor spelplan för antalet kort");
+				 }
+				 valuesSet = true;
 			 }
 			 catch(NumberFormatException e) {
 				 JOptionPane.showMessageDialog(null, "Skriv ett riktigt nummer", "fel", JOptionPane.ERROR_MESSAGE);
+			 }
+			 catch(FileException e) {
+			 	JOPtionPane.showMEssageDialog(null, "DAnge färre antal kolumner/rader "fel", JOptionPane.ERROR_Message);
 			 }
 			 
 		 }
