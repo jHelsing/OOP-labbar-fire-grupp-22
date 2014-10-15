@@ -24,6 +24,7 @@ public class Memory extends JFrame {
 		JMenuItem newGame = new JMenuItem("Nytt spel");
 		menu.add(newGame);
 		add(btnPanel,BorderLayout.SOUTH);
+		//Add newGame
 		add(playersPanel,BorderLayout.WEST);
 		add(menu);
 		pack();
@@ -62,7 +63,7 @@ public class Memory extends JFrame {
 		public	PlayersPanel(ArrayList<Player> players) {
 			
 			setBackground(Color.RED);
-			setLayout(new BorderLayout(2,2));
+			setLayout(new BoxLayout(this,));
 		}
 	}
 	
