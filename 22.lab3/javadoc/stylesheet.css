@@ -16,6 +16,9 @@ a:link, a:visited {
 a:hover, a:focus {
     text-decoration:none;
     color:#bb7a2a;
+    -webkit-box-shadow: 10px 10px 30px -6px rgba(0,0,255,1);
+    -moz-box-shadow: 10px 10px 30px -6px rgba(0,0,255,1);
+    box-shadow: 10px 10px 30px -6px rgba(0,0,255,1);
 }
 a:active {
     text-decoration:none;
