@@ -75,7 +75,6 @@ public class Memory extends JFrame {
 		public GamePanel() {
 			setLayout(new GridLayout(cols,rows));
 			setBackground(Color.blue);
-			nyttSpel();
 		}
 
 		@Override
@@ -90,7 +89,7 @@ public class Memory extends JFrame {
 		//Kort[] cards = new Kort[rows*cols];
 		ArrayList<Kort> cards = new ArrayList<Kort>();
 		System.out.println(bilder[0].getPath());
-	for(int i = 0;i<bilder.length;i++) {
+		for(int i = 0;i<bilder.length;i++) {
 			String path = bilder[i].getPath();
 			cards.add(new Kort(new ImageIcon(path)));
 			cards.setIcon(new ImageIcon(path));

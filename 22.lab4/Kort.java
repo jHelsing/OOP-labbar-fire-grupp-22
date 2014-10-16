@@ -74,7 +74,6 @@ public class Kort extends JColorfulButton{
 		}
 	}//Samma bild
 	
-	
 	 	
 	
 	
