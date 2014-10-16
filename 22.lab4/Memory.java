@@ -18,6 +18,7 @@ public class Memory extends JFrame {
 	private int rows = 0;
 	private int cols = 0;
 	private GamePanel gamePanel;
+	
 	File bildmapp = new File("bildmapp");
 	File[] bilder = this.bildmapp.listFiles();
 
@@ -44,6 +45,7 @@ public class Memory extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().getClass().getName() == "New Game") {
+				
 
 			}
 			else {
@@ -86,6 +88,15 @@ public class Memory extends JFrame {
 	
 	private void nyttSpel() { // initierar spel med kort.
 		this.gamePanel = new GamePanel();
+		Kort[] cards = new Kort[this.rows*this.cols];
+		for(int i=0; i<cards.length; i++) {
+			cards[i] = new Kort((Icon) this.bilder[i]);
+		}
+		
+		
+		
+		/*
+		this.gamePanel = new GamePanel();
 		//Kort[] cards = new Kort[rows*cols];
 		ArrayList<Kort> cards = new ArrayList<Kort>();
 		System.out.println(bilder[0].getPath());
@@ -95,6 +106,7 @@ public class Memory extends JFrame {
 			cards.setIcon(new ImageIcon(path));
 		}
 		this.gamePanel.add(cards);
+		*/
 	}
 	
 	private void startValues() { // Kolla input om korrekt, samt s�tt startv�rden
@@ -128,9 +140,8 @@ public class Memory extends JFrame {
 
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		Memory game = new Memory();
-
 	}
 }
 
