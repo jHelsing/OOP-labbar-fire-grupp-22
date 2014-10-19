@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.annotation.processing.FilerException;
 import javax.swing.*;
 
@@ -18,11 +17,17 @@ public class Memory extends JFrame {
 	private int rows = 0;
 	private int cols = 0;
 	private GamePanel gamePanel;
+	private JColorfulButton[] cardsButton;
 	
 	File bildmapp = new File("bildmapp");
 	File[] bilder = this.bildmapp.listFiles();
+	Icon[] img = new ImageIcon[this.bildmapp.listFiles().length];
 
 	public Memory() {
+		for(int i=0; i<this.bilder.length; i++) { // samlar ihop alla bilder
+			this.img[i] = new ImageIcon(bilder[i].getPath());
+		}
+		System.out.println(img.length);
 		startValues();
 		ButtonPanel btnPanel = new ButtonPanel();
 		PlayersPanel playersPanel = new PlayersPanel(players);
@@ -35,7 +40,6 @@ public class Memory extends JFrame {
 		
 		pack();
 		setVisible(true);
-
 	}
 
 
@@ -66,7 +70,7 @@ public class Memory extends JFrame {
 	}
 	private class PlayersPanel extends JPanel{
 		public	PlayersPanel(ArrayList<Player> players) {
-
+			
 			setBackground(Color.RED);
 			//setLayout(new BoxLayout(this,));
 		}
@@ -88,11 +92,19 @@ public class Memory extends JFrame {
 	
 	private void nyttSpel() { // initierar spel med kort.
 		this.gamePanel = new GamePanel();
-		Kort[] cards = new Kort[this.rows*this.cols];
-		for(int i=0; i<cards.length; i++) {
-			cards[i] = new Kort((Icon) this.bilder[i]);
+		
+		Kort[] gameCards = new Kort[this.rows*this.cols];
+		for(int i=0; i<gameCards.length; i++) {
+			gameCards[i] = new Kort(this.img[i]);
 		}
 		
+	
+		for(int i=0; i<gameCards.length; i++) {
+			cardsButton[i] = new JColorfulButton(gameCards[i].getIcon());
+			cardsButton[i].setBackground(Color.BLUE);
+			cardsButton[i].setSize(50, 50);
+			gamePanel.add(cardsButton[i]);
+		}
 		
 		
 		/*
@@ -114,11 +126,12 @@ public class Memory extends JFrame {
 		while (valuesSet == false) {
 			try {
 				this.cols = Integer.parseInt(JOptionPane.showInputDialog("How many columns?"));				 
-				this.rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));
-				valuesSet = true;				
-				if((this.cols*this.rows)/2> bilder.length) {
+				this.rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));				
+				if((this.cols*this.rows)/2 > bilder.length) {
 					throw new FilerException("F�r stor spelplan f�r antalet kort");
-				}
+				} //else if(this.cols%2 != 0) {
+					//throw new IllegalArgumentException("Måste ha ett jämnt antal rutor");
+				//}
 				valuesSet = true;
 				}
 				catch(NumberFormatException e) {
@@ -127,6 +140,9 @@ public class Memory extends JFrame {
 				catch(FilerException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(),"Fel", JOptionPane.ERROR_MESSAGE);
 				}
+				catch(IllegalArgumentException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Fel", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 
 			}
@@ -140,7 +156,7 @@ public class Memory extends JFrame {
 
 
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		Memory game = new Memory();
 	}
 }
