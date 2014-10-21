@@ -3,8 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import javax.annotation.processing.FilerException;
+import javax.management.timer.TimerMBean;
 import javax.swing.*;
 
 
@@ -15,7 +18,7 @@ import javax.swing.*;
 
 public class Memory extends JFrame implements ActionListener{
 	private Player[] players;
-	private int rows = 0,cols = 0;
+	private int rows = 0,cols = 0,delay = 1500,currentplayerNum;
 	private GamePanel gamePanel;
 	private ButtonPanel btnPanel;
 	private PlayersPanel playerPanel;
@@ -23,10 +26,13 @@ public class Memory extends JFrame implements ActionListener{
 	private File bildmapp = new File("bildmapp");
 	private File[] images = this.bildmapp.listFiles();
 	private Kort chosenCard1,chosenCard2;
+	private Player currentPlayer;
+	private Timer time;
 	
 
 	public Memory() { //Creates the Memory window, and calls for all methods to initialize the game.
 		startValues();
+		this.time = new Timer(delay, timerListenener);
 		this.gameCards = new Kort[rows*cols];
 		this.gamePanel = new GamePanel();
 		this.cards = new Kort[images.length];
@@ -39,6 +45,8 @@ public class Memory extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Memory");
 		nyttSpel();
+		currentPlayer = players[0];
+		currentPlayer.setStatus(Player.Status.ACTIVE);
 		setVisible(true);
 	}
 
@@ -69,11 +77,15 @@ public class Memory extends JFrame implements ActionListener{
 	}
 	
 	 private class PlayersPanel extends JPanel{// Creates the panel for Players
-		
+		  void reload() {
+				currentPlayer.setEnabled(false);
+				currentPlayer.setEnabled(true);
+			}
 		public	PlayersPanel() {
 			setLayout(new GridLayout(players.length,1));
 			setBackground(Color.RED);
 			setPreferredSize(new Dimension(150,150*players.length));
+			
 		}
 	}
 	
@@ -98,22 +110,55 @@ public class Memory extends JFrame implements ActionListener{
 				this.cols = Integer.parseInt(JOptionPane.showInputDialog("How many columns?"));				 
 				this.rows = Integer.parseInt(JOptionPane.showInputDialog("How many rows?"));				
 				if((this.cols*this.rows)/2> images.length) {
-					throw new FilerException("För stor spelplan för antalet kort");
+					throw new IllegalArgumentException("För stor spelplan för antalet kort");
+				}
+				else if((this.cols*this.rows)%2 != 0) {
+					throw new IllegalArgumentException("Ange ett jämnt nummer!");
 				}
 				valuesSet = true;
 				}
 				catch(NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Skriv ett riktigt nummer", "fel", JOptionPane.ERROR_MESSAGE);
 				}
-				catch(FilerException e) {
+				catch(IllegalArgumentException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(),"Fel", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 
 			}
+	ActionListener timerListenener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if(chosenCard1.sammaBild(chosenCard2)) {
+				chosenCard1.setStatus(Kort.Status.SAKNAS);
+				chosenCard2.setStatus(Kort.Status.SAKNAS);
+				chosenCard1 = null;
+				chosenCard2 = null;
+				currentPlayer.incScore();
+				playerPanel.reload();
+				time.stop();
+			}
+			else {
+				chosenCard1.setStatus(Kort.Status.DOLT);
+				chosenCard2.setStatus(Kort.Status.DOLT);
+				chosenCard1 = null;
+				chosenCard2 = null;
+				currentPlayer.setStatus(Player.Status.INACTIVE);
+				currentplayerNum = (currentplayerNum+1)%players.length;
+				currentPlayer = players[currentplayerNum];
+				currentPlayer.setStatus(Player.Status.ACTIVE);
+				playerPanel.reload();
+				time.stop();
+			}
+			
+			
+		}
+	};
 
-	private void nyttSpel() {
-		this.gamePanel.removeAll();
+	private void nyttSpel() { // Initializes game
+		gamePanel.removeAll();
+		Arrays.fill(this.gameCards,null);
 		if (this.players == null) {
 			int num = 0;
 			while(num == 0) {
@@ -122,7 +167,7 @@ public class Memory extends JFrame implements ActionListener{
 					num = Integer.parseInt(inputPlayers);
 					this.players = new Player[num];
 					for(int i= 0; i<players.length;i++) {
-						players[i] = new Player(Integer.toString(i));						
+						players[i] = new Player("Player: " + i);						
 					}
 					this.playerPanel = new PlayersPanel();
 					for(int i = 0; i<players.length;i++) {
@@ -138,7 +183,6 @@ public class Memory extends JFrame implements ActionListener{
 		}
 		else{
 			for(int i = 0; i<this.players.length;i++) {
-				this.players[i].resetScore();
 			}
 				
 		}
@@ -146,18 +190,18 @@ public class Memory extends JFrame implements ActionListener{
 		Verktyg.slumpOrdning(cards);
 		for(int i = 0; i<this.gameCards.length/2;i++) {
 			this.gameCards[i] = cards[i];
-			System.out.println("Antal kort:" + gameCards.length);
 			this.gameCards[i+(this.gameCards.length/2)] = this.gameCards[i].copy(); 
 		}		
 		Verktyg.slumpOrdning(this.gameCards);
 		for(int i = 0; i<this.gameCards.length;i++) {//add actionlisteners
 			gameCards[i].addActionListener(this);
 		}
-		System.out.println("Antal kort:" + gameCards.length);
 		for(int i = 0; i<gameCards.length;i++) {
 			gamePanel.add(this.gameCards[i]);
 		}
 		add(gamePanel,BorderLayout.CENTER);
+		gamePanel.setEnabled(false);
+		gamePanel.setEnabled(true);
 		pack();
 		invalidate();
 		validate();
@@ -179,24 +223,10 @@ public class Memory extends JFrame implements ActionListener{
 		else if(chosenCard2 == null && (Kort) e.getSource() != chosenCard1) {
 			chosenCard2 = (Kort) e.getSource();
 			chosenCard2.setStatus(Kort.Status.SYNLIGT);
+			time.start();
 		}
 		else if((Kort) e.getSource() == chosenCard1 || (Kort) e.getSource() == chosenCard2) {
 			//do nothing
-		}
-		else if(chosenCard1 != null && chosenCard2 !=null){
-			if(chosenCard1.sammaBild(chosenCard2)) {
-				chosenCard1.setStatus(Kort.Status.SAKNAS);
-				chosenCard2.setStatus(Kort.Status.SAKNAS);
-				chosenCard1 = null;
-				chosenCard2 = null;
-				//currentPlayer.add
-			}
-			else {
-				chosenCard1.setStatus(Kort.Status.DOLT);
-				chosenCard2.setStatus(Kort.Status.DOLT);
-				chosenCard1 = null;
-				chosenCard2 = null;
-			}
 		}
 		
 	}else {
